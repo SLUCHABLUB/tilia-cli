@@ -1,0 +1,27 @@
+[package]
+name = "tilia"
+version = "0.1.0"
+edition = "2024"
+
+description = "A cli tool to generate Tilia themes."
+
+[dependencies]
+anyhow = "1.0.100"
+clap = { version = "4.5.53", features = ["cargo", "derive"] }
+
+[dependencies.tabled]
+version = "0.20.0"
+optional = true
+
+# TODO: change this to a git link
+[dependencies.typed-colours]
+path = "../typed-colours"
+
+# TODO: change this to a git link
+[build-dependencies.typed-colours]
+path = "../typed-colours"
+
+[features]
+default = ["tabulate"]
+
+tabulate = ["dep:tabled"]
