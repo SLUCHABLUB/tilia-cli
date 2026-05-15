@@ -1,9 +1,8 @@
-use std::slice::from_ref;
-
 use crate::Mode;
 use crate::colour::Colour;
 use crate::format::Format;
 use clap::ValueEnum as _;
+use std::slice;
 use tabled::Table;
 use tabled::builder::Builder;
 use tabled::grid::config::Offset;
@@ -27,10 +26,15 @@ fn header(modes: &[Mode], derivations: bool) -> Vec<String> {
 /// The colours after which to insert a blank line in the table.
 const INSERT_BLANK_AFTER: &[Colour] = &[Colour::TertiaryBackground, Colour::Border, Colour::Text];
 
-pub fn generate(mode: Option<Mode>, format: Format, derivations: bool, markdown: bool) -> String {
+pub(crate) fn generate(
+    mode: Option<Mode>,
+    format: Format,
+    derivations: bool,
+    markdown: bool,
+) -> String {
     let modes = mode
         .as_ref()
-        .map(from_ref)
+        .map(slice::from_ref)
         .unwrap_or(&[Mode::Dark, Mode::Light]);
 
     let empty_record = vec![""; 1 + modes.len() + derivations as usize];
