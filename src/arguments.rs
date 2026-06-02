@@ -16,12 +16,16 @@ pub enum Command {
     /// Print a colour to stdout.
     #[command(long_about = None)]
     GetColour {
+        /// The name of the colour to print.
         #[arg()]
         colour_name: Colour,
+        /// How to format the colours.
         #[arg(default_value = "hex")]
         format: Format,
+        /// The mode of tilia to use.
         #[arg(short, long)]
         mode: Option<Mode>,
+        /// The mode of tilia to use if the system one cannot be detected.
         #[arg(long)]
         fallback_mode: Option<Mode>,
     },
