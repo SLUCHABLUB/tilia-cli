@@ -1,8 +1,10 @@
 use crate::Colour;
 use crate::RosePine;
 use clap::ValueEnum;
+use typed_colours::Oklab;
 use typed_colours::Palette;
 use typed_colours::SRgb;
+use typed_colours::UnitInterval;
 
 #[derive(Copy, Clone, Debug, ValueEnum)]
 pub enum Mode {
@@ -24,6 +26,11 @@ impl Palette<Colour, SRgb<u8>> for Mode {
     fn resolve(&self, entry: &Colour) -> SRgb<u8> {
         let rose_pine = RosePine::from(*self);
 
+        let mut green = Oklab::<f64, f64>::from(SRgb::<UnitInterval<f64>>::from(rose_pine.iris));
+        green.a *= -1.0;
+        green.b *= -1.0;
+        let green = SRgb::<u8>::from(SRgb::<UnitInterval<f64>>::from(green));
+
         match *entry {
             Colour::PrimaryBackground => rose_pine.base,
             Colour::SecondaryBackground => rose_pine.surface,
@@ -37,7 +44,7 @@ impl Palette<Colour, SRgb<u8>> for Mode {
             Colour::Red => rose_pine.love,
             Colour::Orange => rose_pine.rose,
             Colour::Yellow => rose_pine.gold,
-            Colour::Green => rose_pine.iris, // FIXME
+            Colour::Green => green,
             Colour::Cyan => rose_pine.foam,
             Colour::Blue => rose_pine.pine,
             Colour::Purple => rose_pine.iris,
