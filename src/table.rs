@@ -24,7 +24,12 @@ fn header(modes: &[Mode], derivations: bool) -> Vec<String> {
 }
 
 /// The colours after which to insert a blank line in the table.
-const INSERT_BLANK_AFTER: &[Colour] = &[Colour::TertiaryBackground, Colour::Border, Colour::Text];
+const INSERT_BLANK_AFTER: &[Colour] = &[
+    Colour::TertiaryBackground,
+    Colour::Border,
+    Colour::Text,
+    Colour::Purple,
+];
 
 pub(crate) fn generate(
     mode: Option<Mode>,
