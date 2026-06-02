@@ -28,9 +28,14 @@ impl Palette<Colour, SRgb<u8>> for Mode {
     fn resolve(&self, entry: &Colour) -> SRgb<u8> {
         let rose_pine = RosePine::from(*self);
 
-        let mut green = Oklab::<f64, f64>::from(SRgb::<UnitInterval<f64>>::from(rose_pine.iris));
-        green.a *= -1.0;
-        green.b *= -1.0;
+        let purple = Oklab::<f64, f64>::from(SRgb::<UnitInterval<f64>>::from(rose_pine.iris));
+        let background = Oklab::<f64, f64>::from(SRgb::<UnitInterval<f64>>::from(rose_pine.base));
+
+        let green = Oklab {
+            lightness: purple.lightness,
+            a: background.a - purple.a,
+            b: background.b - purple.b,
+        };
         let green = SRgb::<u8>::from(SRgb::<UnitInterval<f64>>::from(green));
 
         let background = |colour| {
