@@ -26,7 +26,7 @@ pub enum Command {
     /// Print a table of colour to stdout.
     #[cfg(feature = "tabulate")]
     #[command(long_about = None)]
-    TabluateColours {
+    TabulateColours {
         /// Only print colours for this mode.
         #[arg(short, long)]
         mode: Option<Mode>,
