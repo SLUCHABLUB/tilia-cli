@@ -9,6 +9,10 @@ description = "A cli tool to generate Tilia themes."
 anyhow = "1.0.100"
 clap = { version = "4.5.53", features = ["cargo", "derive"] }
 
+[dependencies.dark-light]
+version = "2.0.0"
+optional = true
+
 [dependencies.tabled]
 version = "0.20.0"
 optional = true
@@ -22,6 +26,7 @@ path = "../typed-colours"
 path = "../typed-colours"
 
 [features]
-default = ["tabulate"]
+default = ["tabulate", "mode-detection"]
 
+mode-detection = ["dep:dark-light"]
 tabulate = ["dep:tabled"]

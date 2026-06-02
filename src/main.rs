@@ -22,8 +22,12 @@ fn main() -> anyhow::Result<()> {
             colour_name,
             format,
             mode,
+            fallback_mode,
         } => {
-            println!("{}", colour_name.to_string_with(format, Mode::get(mode)))
+            println!(
+                "{}",
+                colour_name.to_string_with(format, Mode::get(mode, fallback_mode)?)
+            )
         }
         #[cfg(feature = "tabulate")]
         Command::TabulateColours {

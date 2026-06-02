@@ -1,5 +1,6 @@
 use crate::Colour;
 use crate::RosePine;
+use anyhow::bail;
 use clap::ValueEnum;
 use typed_colours::Lerp as _;
 use typed_colours::Oklab;
@@ -15,12 +16,29 @@ pub enum Mode {
 }
 
 impl Mode {
-    pub fn get(specified: Option<Mode>) -> Mode {
+    pub fn get(specified: Option<Mode>, fallback: Option<Mode>) -> anyhow::Result<Mode> {
         if let Some(mode) = specified {
-            return mode;
+            return Ok(mode);
         }
 
-        todo!("determine the system mode")
+        #[cfg(feature = "mode-detection")]
+        {
+            use anyhow::Context as _;
+
+            let mode = dark_light::detect().context("detecting system theme mode")?;
+
+            match mode {
+                dark_light::Mode::Dark => return Ok(Mode::Dark),
+                dark_light::Mode::Light => return Ok(Mode::Light),
+                dark_light::Mode::Unspecified => (),
+            }
+        }
+
+        if let Some(mode) = fallback {
+            return Ok(mode);
+        }
+
+        bail!("cannot detect system theme mode");
     }
 }
 

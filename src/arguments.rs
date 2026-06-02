@@ -22,6 +22,8 @@ pub enum Command {
         format: Format,
         #[arg(short, long)]
         mode: Option<Mode>,
+        #[arg(long)]
+        fallback_mode: Option<Mode>,
     },
     /// Print a table of colour to stdout.
     #[cfg(feature = "tabulate")]
