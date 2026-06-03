@@ -5,6 +5,10 @@ use crate::format::Format;
 use crate::mode::Mode;
 use crate::rose_pine::RosePine;
 use clap::Parser;
+use std::io;
+use std::io::IsTerminal;
+use std::io::Write;
+use std::io::stdout;
 
 mod arguments;
 mod colour;
@@ -24,10 +28,7 @@ fn main() -> anyhow::Result<()> {
             mode,
             fallback_mode,
         } => {
-            println!(
-                "{}",
-                colour_name.to_string_with(format, Mode::get(mode, fallback_mode)?)
-            )
+            print(&colour_name.to_string_with(format, Mode::get(mode, fallback_mode)?))?;
         }
         #[cfg(feature = "tabulate")]
         Command::TabulateColours {
@@ -36,9 +37,23 @@ fn main() -> anyhow::Result<()> {
             derivations,
             markdown,
         } => {
-            println!("{}", table::generate(mode, format, derivations, markdown))
+            print(&table::generate(mode, format, derivations, markdown))?;
         }
     }
+
+    Ok(())
+}
+
+fn print(string: &str) -> io::Result<()> {
+    let mut stdout = stdout();
+
+    stdout.write_all(string.as_bytes())?;
+
+    if stdout.is_terminal() {
+        stdout.write_all("\n".as_bytes())?;
+    }
+
+    stdout.flush()?;
 
     Ok(())
 }
