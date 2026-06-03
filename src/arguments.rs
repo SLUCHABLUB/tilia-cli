@@ -20,10 +20,10 @@ pub enum Command {
         #[arg()]
         colour_name: Colour,
         /// How to format the colours.
-        #[arg(default_value = "hex")]
+        #[arg(value_enum, default_value_t, env = "TILIA_FORMAT")]
         format: Format,
         /// The mode of tilia to use.
-        #[arg(short, long)]
+        #[arg(short, long, env = "TILIA_MODE")]
         mode: Option<Mode>,
         /// The mode of tilia to use if the system one cannot be detected.
         #[arg(long)]
@@ -40,7 +40,7 @@ pub enum Command {
         #[arg(short, long)]
         mode: Option<Mode>,
         /// How to format the colours.
-        #[arg(short, long, default_value = "hex")]
+        #[arg(short, long, value_enum, default_value_t, env = "TILIA_FORMAT")]
         format: Format,
         /// Print the Rosé Pine origin colours.
         #[arg(short, long)]

@@ -7,7 +7,10 @@ description = "A cli tool to generate Tilia themes."
 
 [dependencies]
 anyhow = "1.0.100"
-clap = { version = "4.5.53", features = ["cargo", "derive"] }
+
+[dependencies.clap]
+version = "4.5.53"
+features = ["cargo", "derive", "env"]
 
 [dependencies.dark-light]
 version = "2.0.0"
