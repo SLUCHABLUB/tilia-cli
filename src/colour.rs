@@ -102,7 +102,8 @@ impl Colour {
 
     pub fn to_string_with(self, format: Format, mode: Mode) -> String {
         match format {
-            Format::HashHex24BitSRgb => HashPrefixed(Hexadecimal(self.srgb(mode))).to_string(),
+            Format::HashRrggbb => HashPrefixed(Hexadecimal(self.srgb(mode))).to_string(),
+            Format::Rrggbbaa => format!("{}ff", Hexadecimal(self.srgb(mode))),
         }
     }
 }

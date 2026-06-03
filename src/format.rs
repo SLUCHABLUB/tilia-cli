@@ -7,6 +7,9 @@ pub enum Format {
     /// From my experience, this is the most common.
     /// Thus, I made it the default.
     #[default]
-    #[value(alias("hex"))]
-    HashHex24BitSRgb,
+    #[value(name = "#rrggbb")]
+    HashRrggbb,
+    /// sRGBA with hexadecimal 8-bit integral channels.
+    /// Note that the alpha channel is always maxed out.
+    Rrggbbaa,
 }
