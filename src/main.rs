@@ -27,8 +27,12 @@ fn main() -> anyhow::Result<()> {
             format,
             mode,
             fallback_mode,
+            newline,
         } => {
-            print(&colour_name.to_string_with(format, Mode::get(mode, fallback_mode)?))?;
+            print(
+                &colour_name.to_string_with(format, Mode::get(mode, fallback_mode)?),
+                newline,
+            )?;
         }
         #[cfg(feature = "tabulate")]
         Command::TabulateColours {
@@ -36,20 +40,24 @@ fn main() -> anyhow::Result<()> {
             format,
             derivations,
             markdown,
+            newline,
         } => {
-            print(&table::generate(mode, format, derivations, markdown))?;
+            print(
+                &table::generate(mode, format, derivations, markdown),
+                newline,
+            )?;
         }
     }
 
     Ok(())
 }
 
-fn print(string: &str) -> io::Result<()> {
+fn print(string: &str, force_newline: bool) -> io::Result<()> {
     let mut stdout = stdout();
 
     stdout.write_all(string.as_bytes())?;
 
-    if stdout.is_terminal() {
+    if force_newline || stdout.is_terminal() {
         stdout.write_all("\n".as_bytes())?;
     }
 
