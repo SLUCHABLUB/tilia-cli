@@ -1,6 +1,8 @@
 use crate::Colour;
 use crate::Format;
 use crate::Mode;
+use crate::foreground::BackgroundLevel;
+use crate::foreground::ForegroundColour;
 use clap::Parser;
 use clap::Subcommand;
 
@@ -22,6 +24,27 @@ pub enum Command {
         /// How to format the colours.
         #[arg(value_enum, default_value_t, env = "TILIA_FORMAT")]
         format: Format,
+        /// The mode of tilia to use.
+        #[arg(short, long, env = "TILIA_MODE")]
+        mode: Option<Mode>,
+        /// The mode of tilia to use if the system one cannot be detected.
+        #[arg(long)]
+        fallback_mode: Option<Mode>,
+        /// Always print a newline, even when not ran interactively.
+        #[arg(short, long)]
+        newline: bool,
+    },
+    /// Print a colour to stdout.
+    #[command(long_about = None)]
+    GetBackground {
+        /// The name of the colour to get the background for.
+        #[arg()]
+        colour_name: ForegroundColour,
+        /// How to format the colours.
+        #[arg(value_enum, default_value_t, env = "TILIA_FORMAT")]
+        format: Format,
+        #[arg(short = 'L', long, value_enum)]
+        level: BackgroundLevel,
         /// The mode of tilia to use.
         #[arg(short, long, env = "TILIA_MODE")]
         mode: Option<Mode>,

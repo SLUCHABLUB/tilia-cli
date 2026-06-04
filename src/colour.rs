@@ -3,8 +3,6 @@ use crate::Mode;
 use clap::ValueEnum;
 use typed_colours::Palette as _;
 use typed_colours::SRgb;
-use typed_colours::format::HashPrefixed;
-use typed_colours::format::Hexadecimal;
 
 #[derive(Copy, Clone, Eq, PartialEq, ValueEnum)]
 pub enum Colour {
@@ -27,14 +25,6 @@ pub enum Colour {
     Cyan,
     Blue,
     Purple,
-
-    BackgroundRed,
-    BackgroundOrange,
-    BackgroundYellow,
-    BackgroundGreen,
-    BackgroundCyan,
-    BackgroundBlue,
-    BackgroundPurple,
 }
 
 impl Colour {
@@ -61,13 +51,6 @@ impl Colour {
             Colour::Cyan => "Cyan",
             Colour::Blue => "Blue",
             Colour::Purple => "Purple",
-            Colour::BackgroundRed => "Background Red",
-            Colour::BackgroundOrange => "Background Orange",
-            Colour::BackgroundYellow => "Background Yellow",
-            Colour::BackgroundGreen => "Background Green",
-            Colour::BackgroundCyan => "Background Cyan",
-            Colour::BackgroundBlue => "Background Blue",
-            Colour::BackgroundPurple => "Background Purple",
         }
     }
 
@@ -90,21 +73,11 @@ impl Colour {
             Colour::Cyan => "Foam",
             Colour::Blue => "Pine",
             Colour::Purple => "Iris",
-            Colour::BackgroundRed => "Base & Love",
-            Colour::BackgroundOrange => "Base & Rose",
-            Colour::BackgroundYellow => "Base & Gold",
-            Colour::BackgroundGreen => "Base & Iris*",
-            Colour::BackgroundCyan => "Base & Foam",
-            Colour::BackgroundBlue => "Base & Pine",
-            Colour::BackgroundPurple => "Base & Iris",
         }
     }
 
     pub fn to_string_with(self, format: Format, mode: Mode) -> String {
-        match format {
-            Format::HashRrggbb => HashPrefixed(Hexadecimal(self.srgb(mode))).to_string(),
-            Format::Rrggbbaa => format!("{}ff", Hexadecimal(self.srgb(mode))),
-        }
+        format.format(self.srgb(mode))
     }
 }
 

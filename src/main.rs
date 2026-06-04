@@ -12,6 +12,7 @@ use std::io::stdout;
 
 mod arguments;
 mod colour;
+mod foreground;
 mod format;
 mod mode;
 mod rose_pine;
@@ -31,6 +32,19 @@ fn main() -> anyhow::Result<()> {
         } => {
             print(
                 &colour_name.to_string_with(format, Mode::get(mode, fallback_mode)?),
+                newline,
+            )?;
+        }
+        Command::GetBackground {
+            colour_name,
+            format,
+            level,
+            mode,
+            fallback_mode,
+            newline,
+        } => {
+            print(
+                &format.format(colour_name.background(level, Mode::get(mode, fallback_mode)?)),
                 newline,
             )?;
         }
