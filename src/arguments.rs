@@ -34,10 +34,10 @@ pub enum Command {
         #[arg(short, long)]
         newline: bool,
     },
-    /// Print a colour to stdout.
+    /// Print the background colour for a given foreground colour to stdout.
     #[command(long_about = None)]
     GetBackground {
-        /// The name of the colour to get the background for.
+        /// The name of the foreground colour to get the background for.
         #[arg()]
         colour_name: ForegroundColour,
         /// How to format the colours.
