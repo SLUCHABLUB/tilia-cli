@@ -69,7 +69,7 @@ impl ForegroundColour {
     pub fn background(self, level: BackgroundLevel, mode: Mode) -> SRgb<u8> {
         let background = mode.resolve(&level.to_colour());
 
-        if self.is_achromatic() {
+        if self.is_achromatic() || mode == Mode::Dark {
             background
         } else {
             let colour = mode.resolve(&self.to_colour());

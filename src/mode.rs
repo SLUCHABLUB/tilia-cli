@@ -7,7 +7,7 @@ use typed_colours::Palette;
 use typed_colours::SRgb;
 use typed_colours::UnitInterval;
 
-#[derive(Copy, Clone, Debug, ValueEnum)]
+#[derive(Copy, Clone, Eq, PartialEq, Debug, ValueEnum)]
 pub enum Mode {
     Dark,
     Light,
