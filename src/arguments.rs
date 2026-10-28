@@ -30,9 +30,6 @@ pub enum Command {
         /// The mode of tilia to use if the system one cannot be detected.
         #[arg(long)]
         fallback_mode: Option<Mode>,
-        /// Always print a newline, even when not ran interactively.
-        #[arg(short, long)]
-        newline: bool,
     },
     /// Print the background colour for a given foreground colour to stdout.
     #[command(long_about = None)]
@@ -51,9 +48,6 @@ pub enum Command {
         /// The mode of tilia to use if the system one cannot be detected.
         #[arg(long)]
         fallback_mode: Option<Mode>,
-        /// Always print a newline, even when not ran interactively.
-        #[arg(short, long)]
-        newline: bool,
     },
     /// Print a table of colour to stdout.
     #[cfg(feature = "tabulate")]
@@ -71,8 +65,5 @@ pub enum Command {
         /// Print the table in markdown syntax.
         #[arg(short = 'M', long)]
         markdown: bool,
-        /// Always print a newline, even when not ran interactively.
-        #[arg(short, long)]
-        newline: bool,
     },
 }
