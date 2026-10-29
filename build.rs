@@ -8,7 +8,9 @@ use typed_colours::format::Hexadecimal;
 /// Parses a Rosé Pine colour as it is given on the
 /// [pallete section on thir website](https://rosepinetheme.com/palette).
 fn parse(string: &str) -> SRgb<u8> {
-    let HashPrefixed(Hexadecimal(colour)) = string.parse().unwrap();
+    let HashPrefixed {
+        0: Hexadecimal(colour),
+    } = string.parse().unwrap();
 
     colour
 }

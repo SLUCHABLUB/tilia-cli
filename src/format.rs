@@ -3,7 +3,9 @@ use typed_colours::SRgb;
 use typed_colours::format::AlphaSuffixed;
 use typed_colours::format::CommaSeparated;
 use typed_colours::format::HashPrefixed;
+use typed_colours::format::HexPrefixed;
 use typed_colours::format::Hexadecimal;
+use typed_colours::format::Reversed;
 
 #[derive(Copy, Clone, Default, ValueEnum)]
 pub enum Format {
@@ -19,6 +21,8 @@ pub enum Format {
     Rrggbbaa,
     #[value(name = "r,g,b")]
     RCommaGCommaB,
+    #[value(name = "0xbbggrr")]
+    ZeroXBbGgRr,
 }
 
 impl Format {
@@ -27,6 +31,7 @@ impl Format {
             Format::HashRrggbb => HashPrefixed(Hexadecimal(colour)).to_string(),
             Format::Rrggbbaa => Hexadecimal(AlphaSuffixed(colour)).to_string(),
             Format::RCommaGCommaB => CommaSeparated(colour).to_string(),
+            Format::ZeroXBbGgRr => HexPrefixed(Hexadecimal(Reversed(colour))).to_string(),
         }
     }
 }
